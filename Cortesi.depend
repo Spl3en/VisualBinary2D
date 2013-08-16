@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1375896129 source:c:\users\spl3en\desktop\c\bmpfile\bmpfile.c
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"bmpfile.h"
+
+1264998112 c:\users\spl3en\desktop\c\bmpfile\bmpfile.h
+
+1376521085 source:c:\users\spl3en\desktop\c\cortesi\main.c
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<bmpfile.h>
+	<math.h>
+	"../LookUpTable/LookUpTable.h"
+
+1376403006 source:c:\users\spl3en\desktop\c\lookuptable\lookuptable.c
+	"LookUpTable.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
+1376403008 c:\users\spl3en\desktop\c\lookuptable\lookuptable.h
+
+1376670118 source:c:\users\spl3en\desktop\c\cortesi\cortesi.c
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<bmpfile.h>
+	<math.h>
+	"LookUpTable/LookUpTable.h"
+	"Frame/Frame.h"
+	"fft.h"
+
+1376403262 c:\users\spl3en\desktop\c\cortesi\lookuptable\lookuptable.h
+
+1376661286 c:\users\spl3en\desktop\c\cortesi\frame\frame.h
+
+1376664900 c:\users\spl3en\desktop\c\cortesi\fft.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<complex.h>
+
+1376664040 source:c:\users\spl3en\desktop\c\cortesi\fft.c
+	"fft.h"
+
+1376665294 source:c:\users\spl3en\desktop\c\cortesi\frame\frame.c
+	"Frame.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
