@@ -32,17 +32,25 @@
 			<Add option="-Wall" />
 			<Add directory="..\bmpfile" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="FFT\fft.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\LookUpTable\LookUpTable.c">
+		<Unit filename="FFT\fft.h" />
+		<Unit filename="Frame\Frame.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\LookUpTable\LookUpTable.h" />
-		<Unit filename="..\bmpfile\bmpfile.c">
+		<Unit filename="Frame\Frame.h" />
+		<Unit filename="LookUpTable\LookUpTable.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\bmpfile\bmpfile.h" />
+		<Unit filename="LookUpTable\LookUpTable.h" />
+		<Unit filename="bmpfile\bmpfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bmpfile\bmpfile.h" />
+		<Unit filename="cortesi.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<debugger />
