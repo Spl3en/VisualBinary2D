@@ -2,11 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <bmpfile.h>
 #include <math.h>
 #include "LookUpTable/LookUpTable.h"
 #include "Frame/Frame.h"
+#include "bmpfile/bmpfile.h"
 #include "FFT/fft.h"
+
+#ifdef WIN32 // Mkdir
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#define _mkdir(x) mkdir(x, 01777)
+#endif
+
 
 #define CURVE_WIDTH 1024
 #define CURVE_HEIGHT 512
@@ -16,6 +24,7 @@ static LookUpTable * sqrt_table = NULL;
 typedef struct
 {
 	char *name;
+	char *path;
 	long int size;
 	bmpfile_t *bmp;
 	bmpfile_t *distance_curve;
@@ -77,7 +86,56 @@ bmpfile_t * complex_to_bmp (COMPLEX **c, int size)
 
 char *get_filename (char *pathname)
 {
-	return (strrchr (pathname, '/') + 1);
+	char *res = strrchr (pathname, '/');
+
+	if (res != NULL)
+		return res + 1;
+	else
+		return pathname;
+}
+
+
+char *remove_ext (char* mystr)
+{
+	char dot = '.';
+	char sep = '/';
+	// (paxdiablo) http://stackoverflow.com/questions/2736753/how-to-remove-extension-from-file-name
+
+    char *retstr, *lastdot, *lastsep;
+
+    // Error checks and allocate string.
+    if (mystr == NULL)
+        return NULL;
+    if ((retstr = malloc (strlen (mystr) + 1)) == NULL)
+        return NULL;
+
+    // Make a copy and find the relevant characters.
+
+    strcpy (retstr, mystr);
+    lastdot = strrchr (retstr, dot);
+    lastsep = (sep == 0) ? NULL : strrchr (retstr, sep);
+
+    // If it has an extension separator.
+
+    if (lastdot != NULL) {
+        // and it's before the extenstion separator.
+
+        if (lastsep != NULL) {
+            if (lastsep < lastdot) {
+                // then remove it.
+
+                *lastdot = '\0';
+            }
+        } else {
+            // Has extension separator with no path separator.
+
+            *lastdot = '\0';
+        }
+    }
+
+    // Return the modified string.
+
+    return retstr;
 }
 
 double get_euclidian_distance (unsigned char src_x, unsigned char src_y, unsigned char dest_x, unsigned char dest_y)
@@ -93,7 +151,7 @@ void binary_save_bmp (BinaryData *binary, unsigned long int start_offset, unsign
 	char bmp_filename[1024];
 	static unsigned int frame_id = 0;
 
-	sprintf (bmp_filename, "./%s/%d_%s_0x%lx-0x%lx.bmp", binary->name, frame_id++, binary->name, start_offset, cur_offset);
+	sprintf (bmp_filename, "./%s/%d_%s_0x%lx-0x%lx.bmp", binary->path, frame_id++, binary->name, start_offset, cur_offset);
 	bmp_save (binary->bmp, bmp_filename);
 	bmp_destroy (binary->bmp);
 	binary->bmp = bmp_create (256, 256, 8);
@@ -104,7 +162,7 @@ void binary_save_frame (BinaryData *binary, unsigned long int start_offset, unsi
 	char bmp_filename[1024];
 	static unsigned int frame_id = 0;
 
-	sprintf (bmp_filename, "./%s/%d_%s_FFT_0x%lx-0x%lx.bmp", binary->name, frame_id++, binary->name, start_offset, cur_offset);
+	sprintf (bmp_filename, "./%s/%d_%s_FFT_0x%lx-0x%lx.bmp", binary->path, frame_id++, binary->name, start_offset, cur_offset);
 
 	COMPLEX **c = frame_to_complex(binary->frame);
 	FFT2D(c, binary->frame->size, binary->frame->size, 1);
@@ -306,7 +364,7 @@ void analyze_2d (BinaryData *binary)
 			if (points_far++ > maxsize)
 			{
 				printf("%.8lx-%.8lx | %f\n", start_offset, cur_offset, frame_distance);
-				binary_save(binary, start_offset, cur_offset);
+				binary_save (binary, start_offset, cur_offset);
 
 				bresenham (binary,
 					(int)(progress * CURVE_WIDTH), CURVE_HEIGHT,
@@ -565,13 +623,17 @@ int main (int argc, char **argv)
 	// Binary file related
 	BinaryData binary = {
 		.name = get_filename (argv[1]),
+		.path = remove_ext (get_filename (argv[1])),
 		.size = get_filesize (bin),
 		.bmp  = bmp_create (256, 256, 8),
 		.distance_curve = bmp_create (CURVE_WIDTH, CURVE_HEIGHT, 8),
-		.intensity = bmp_create(256, 256, 8),
+		.intensity = bmp_create (256, 256, 8),
 		.handler = bin,
-		.frame = frame_new(256)
+		.frame = frame_new (256)
 	};
+
+	_mkdir(binary.path);
+	_mkdir("./curves");
 
 	// Analyze
 	analyze_2d(&binary);

@@ -55,3 +55,50 @@
 	<stdio.h>
 	<string.h>
 
+1376665294 source:c:\users\spl3en\documents\github\visualbinary2d\frame\frame.c
+	"Frame.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1376661286 c:\users\spl3en\documents\github\visualbinary2d\frame\frame.h
+
+1376414646 source:c:\users\spl3en\documents\github\visualbinary2d\lookuptable\lookuptable.c
+	"LookUpTable.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
+1376403262 c:\users\spl3en\documents\github\visualbinary2d\lookuptable\lookuptable.h
+
+1375896129 source:c:\users\spl3en\documents\github\visualbinary2d\bmpfile\bmpfile.c
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"bmpfile.h"
+
+1264998112 c:\users\spl3en\documents\github\visualbinary2d\bmpfile\bmpfile.h
+
+1376956671 source:c:\users\spl3en\documents\github\visualbinary2d\cortesi.c
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"LookUpTable/LookUpTable.h"
+	"Frame/Frame.h"
+	"bmpfile/bmpfile.h"
+	"FFT/fft.h"
+	<direct.h>
+	<sys/stat.h>
+
+1376664900 c:\users\spl3en\documents\github\visualbinary2d\fft\fft.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<complex.h>
+
+1376664040 source:c:\users\spl3en\documents\github\visualbinary2d\fft\fft.c
+	"fft.h"
+
